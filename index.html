@@ -1211,7 +1211,43 @@ document.querySelectorAll('.counter-imgtext--item-cont p').forEach(p => {
 })();
 </script>
 
+<script>
+(function () {
+  const items = Array.from(document.querySelectorAll('.questions__li'));
+  if (!items.length) return;
 
+  // init: hide all answers
+  items.forEach(li => {
+    const ans = li.querySelector('.questions__answer');
+    if (ans) ans.style.display = 'none';
+    li.classList.remove('open');
+  });
+
+  items.forEach(li => {
+    const q = li.querySelector('.questions__question');
+    const ans = li.querySelector('.questions__answer');
+    if (!q || !ans) return;
+
+    q.style.cursor = 'pointer';
+    q.addEventListener('click', () => {
+      const isOpen = li.classList.contains('open');
+
+      // close all
+      items.forEach(x => {
+        const a = x.querySelector('.questions__answer');
+        if (a) a.style.display = 'none';
+        x.classList.remove('open');
+      });
+
+      // open current (if it was closed)
+      if (!isOpen) {
+        ans.style.display = 'block';
+        li.classList.add('open');
+      }
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
